@@ -760,9 +760,20 @@
 						<div class="title">Contact Form</div>
 
 						<!-- content -->
-						<form id="cform" action="https://formsubmit.co/your@email.com" method="POST">
-  							<input type="hidden" name="_redirect" value="false">
+						<form id="cform" action="https://api.web3forms.com/submit" method="POST">
+							<!-- REQUIRED: Your access key -->
+							<input type="hidden" name="access_key" value="27371bd0-70a7-4ad2-a171-63a630f72a45">
 
+							<!-- OPTIONAL: Subject line -->
+							<input type="hidden" name="subject" value="New Contact Form Submission">
+
+							<!-- OPTIONAL: Redirect (or remove this if you want to stay on the page) -->
+							<input type="hidden" name="redirect" value="">
+
+							<!-- Honeypot (anti-bot) -->
+							<input type="checkbox" name="botcheck" style="display:none;">
+
+							<!-- Form fields -->
 							<div class="row">
 								<div class="col col-d-6 col-t-6 col-m-12">
 									<div class="group-val">
@@ -780,6 +791,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="align-left">
 								<button type="submit" class="button">
 									<span class="text">Send Message</span>
@@ -788,6 +800,7 @@
 							</div>
 						</form>
 
+						<!-- Success message -->
 						<div class="alert-success" style="display:none;">
 							<p>Thanks, your message has been sent!</p>
 						</div>
@@ -830,34 +843,33 @@
 	<script src="js/jquery.slimscroll.js"></script>
 	<script src="js/owl.carousel.js"></script>
 	<script src="js/typed.js"></script>
-	<script src="../../../use.fontawesome.com/8da76d029b.js"></script>
+	<!-- <script src="../../../use.fontawesome.com/8da76d029b.js"></script> -->
 
 	<script>
 		document.getElementById("cform").addEventListener("submit", function (e) {
-		  e.preventDefault();
-		
-		  const form = this;
-		  const formData = new FormData(form);
-		
-		  fetch(form.action, {
-		    method: "POST",
-		    body: formData,
-		    headers: {
-		      'Accept': 'application/json'
-		    }
-		  }).then(response => {
-		    if (response.ok) {
-		      document.querySelector(".alert-success").style.display = "block";
-		      form.reset();
-		    } else {
-		      alert("Oops! There was a problem sending your message.");
-		    }
-		  }).catch(error => {
-		    alert("Error submitting the form. Please try again.");
-		    console.error(error);
-		  });
+			e.preventDefault();
+
+			const form = this;
+			const formData = new FormData(form);
+
+			fetch("https://api.web3forms.com/submit", {
+				method: "POST",
+				body: formData
+			}).then(response => response.json()).then(data => {
+				if (data.success) {
+					document.querySelector(".alert-success").style.display = "block";
+					form.reset();
+				} else {
+					alert("There was a problem sending your message.");
+					console.error(data);
+				}
+			}).catch(error => {
+				alert("Something went wrong. Please try again.");
+				console.error(error);
+			});
 		});
-		</script>
+	</script>
+
 
 
 
@@ -872,8 +884,8 @@
 	<script src="js/scripts.js"></script>
 
 	<!-- bslthemes.com buttons assets begin -->
-	<link rel="stylesheet" href="../../bslthms-advanced-btns/assets/style.css">
-	<script src="../../bslthms-advanced-btns/assets/script.js"></script>
+	<!-- <link rel="stylesheet" href="../../bslthms-advanced-btns/assets/style.css">
+	<script src="../../bslthms-advanced-btns/assets/script.js"></script> -->
 	<!-- bslthemes.com buttons assets end -->
 
 </body>

@@ -972,6 +972,8 @@
 		});
 	</script>
 
+	
+
 
 
 
@@ -984,6 +986,16 @@
 		Main Scripts
 	-->
 	<script src="js/scripts.js"></script>
+
+	<script>
+	    document.addEventListener('keydown', function (e) {
+	        if (e.key === "F12" || 
+	            (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) || 
+	            (e.ctrlKey && e.key === "U")) {
+	            e.preventDefault();
+	        }
+	    });
+	</script>
 
 	<!-- bslthemes.com buttons assets begin -->
 	<!-- <link rel="stylesheet" href="../../bslthms-advanced-btns/assets/style.css">
